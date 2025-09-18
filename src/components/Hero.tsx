@@ -1,9 +1,19 @@
-import { Search, MapPin } from "lucide-react";
+import { Search, MapPin, Calendar as CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 import heroImage from "@/assets/hero-motorcycle.jpg";
 
 const Hero = () => {
+  const [departureDate, setDepartureDate] = useState<Date>();
+  const [returnDate, setReturnDate] = useState<Date>();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image with Overlay */}
@@ -29,8 +39,8 @@ const Hero = () => {
           </p>
           
           {/* Search Form */}
-          <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-2xl max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-4">
+          <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-2xl max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-5 gap-4">
               <div className="relative">
                 <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                 <Input 
@@ -38,12 +48,73 @@ const Hero = () => {
                   className="search-input pl-12"
                 />
               </div>
+              
               <div className="relative">
-                <Input 
-                  placeholder="Type de moto" 
-                  className="search-input"
-                />
+                <Select>
+                  <SelectTrigger className="search-input">
+                    <SelectValue placeholder="Type de véhicule" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="scooter">Scooter</SelectItem>
+                    <SelectItem value="moto">Moto</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
+
+              <div className="relative">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "search-input justify-start text-left font-normal",
+                        !departureDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {departureDate ? format(departureDate, "dd/MM/yyyy", { locale: fr }) : "Date de départ"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={departureDate}
+                      onSelect={setDepartureDate}
+                      disabled={(date) => date < new Date()}
+                      initialFocus
+                      className="pointer-events-auto"
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <div className="relative">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "search-input justify-start text-left font-normal",
+                        !returnDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {returnDate ? format(returnDate, "dd/MM/yyyy", { locale: fr }) : "Date de retour"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={returnDate}
+                      onSelect={setReturnDate}
+                      disabled={(date) => date < new Date() || (departureDate && date < departureDate)}
+                      initialFocus
+                      className="pointer-events-auto"
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+
               <Button className="btn-hero h-14 text-lg">
                 <Search className="w-5 h-5 mr-2" />
                 Chercher
