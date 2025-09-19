@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MessageCircle, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
@@ -25,10 +25,7 @@ interface MessageDropdownProps {
 
 export const MessageDropdown = ({ unreadCount, onMessageRead }: MessageDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
-
-  // Messages simulés pour la démo
-  const recentMessages: Message[] = [
+  const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
       from: "Marie Dupont",
@@ -50,9 +47,18 @@ export const MessageDropdown = ({ unreadCount, onMessageRead }: MessageDropdownP
       time: "Hier",
       unread: false
     }
-  ];
+  ]);
+  const navigate = useNavigate();
 
   const handleMessageClick = (messageId: string, conversationId: string) => {
+    // Marquer le message comme lu localement
+    setMessages(prev => 
+      prev.map(msg => 
+        msg.id === messageId ? { ...msg, unread: false } : msg
+      )
+    );
+    
+    // Notifier le parent pour mettre à jour le compteur
     onMessageRead(messageId);
     setIsOpen(false);
     navigate(`/messages?conversation=${conversationId}`);
@@ -77,14 +83,14 @@ export const MessageDropdown = ({ unreadCount, onMessageRead }: MessageDropdownP
         <div className="p-4">
           <h3 className="font-semibold text-lg mb-3">Messages récents</h3>
           
-          {recentMessages.length === 0 ? (
+          {messages.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
               <MessageCircle className="w-12 h-12 mx-auto mb-2 opacity-50" />
               <p>Aucun message</p>
             </div>
           ) : (
             <div className="space-y-3">
-              {recentMessages.map((message, index) => (
+              {messages.map((message, index) => (
                 <div 
                   key={message.id} 
                   className="flex items-start gap-3 p-2 hover:bg-accent rounded-lg cursor-pointer"
