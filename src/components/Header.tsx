@@ -30,17 +30,14 @@ const Header = () => {
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#" className="text-primary hover:text-secondary transition-colors font-medium">
+            <Link to="/louer" className="text-primary hover:text-secondary transition-colors font-medium">
               Louer
-            </a>
-            <a href="#" className="text-primary hover:text-secondary transition-colors font-medium">
+            </Link>
+            <Link to="/proposer" className="text-primary hover:text-secondary transition-colors font-medium">
               Proposer
-            </a>
-            <a href="#" className="text-primary hover:text-secondary transition-colors font-medium">
+            </Link>
+            <a href="#how-it-works" className="text-primary hover:text-secondary transition-colors font-medium">
               Comment ça marche
-            </a>
-            <a href="#" className="text-primary hover:text-secondary transition-colors font-medium">
-              Blog
             </a>
           </nav>
           
@@ -79,17 +76,14 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden border-t border-border bg-white/95 backdrop-blur-sm">
             <nav className="py-4 space-y-4">
-              <a href="#" className="block text-primary hover:text-secondary transition-colors font-medium">
+              <Link to="/louer" className="block text-primary hover:text-secondary transition-colors font-medium">
                 Louer une moto
-              </a>
-              <a href="#" className="block text-primary hover:text-secondary transition-colors font-medium">
+              </Link>
+              <Link to="/proposer" className="block text-primary hover:text-secondary transition-colors font-medium">
                 Proposer ma moto
-              </a>
-              <a href="#" className="block text-primary hover:text-secondary transition-colors font-medium">
+              </Link>
+              <a href="#how-it-works" className="block text-primary hover:text-secondary transition-colors font-medium">
                 Comment ça marche
-              </a>
-              <a href="#" className="block text-primary hover:text-secondary transition-colors font-medium">
-                Blog
               </a>
               <div className="flex gap-3 pt-4 border-t border-border">
                 {user ? (

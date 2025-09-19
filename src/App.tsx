@@ -10,6 +10,8 @@ import MesAnnonces from "./pages/MesAnnonces";
 import MesFavoris from "./pages/MesFavoris";
 import CentreAide from "./pages/CentreAide";
 import Messages from "./pages/Messages";
+import Louer from "./pages/Louer";
+import Proposer from "./pages/Proposer";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +30,8 @@ const App = () => (
           <Route path="/mes-favoris" element={<MesFavoris />} />
           <Route path="/centre-aide" element={<CentreAide />} />
           <Route path="/messages" element={<Messages />} />
+          <Route path="/louer" element={<Louer />} />
+          <Route path="/proposer" element={<Proposer />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
