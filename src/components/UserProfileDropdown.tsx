@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { User, Settings, FileText, ChevronDown } from 'lucide-react';
+import { User, Settings, FileText, ChevronDown, Car, Heart, HelpCircle, Calendar, CheckCircle, XCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,18 +10,21 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { ProfileForm } from './ProfileForm';
-import { DrivingLicenseForm } from './DrivingLicenseForm';
+import { AccountContent } from './AccountContent';
 import { useProfile } from '@/hooks/useProfile';
 import { useAuth } from '@/hooks/useAuth';
 
 export const UserProfileDropdown = () => {
   const { user, signOut } = useAuth();
   const { profile } = useProfile();
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isLicenseOpen, setIsLicenseOpen] = useState(false);
+  const navigate = useNavigate();
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
 
   const displayName = profile?.first_name || user?.email || 'Utilisateur';
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+  };
 
   return (
     <DropdownMenu>
@@ -33,35 +37,44 @@ export const UserProfileDropdown = () => {
       </DropdownMenuTrigger>
       
       <DropdownMenuContent align="end" className="w-56 bg-background border border-border">
-        <Dialog open={isProfileOpen} onOpenChange={setIsProfileOpen}>
+        <Dialog open={isAccountOpen} onOpenChange={setIsAccountOpen}>
           <DialogTrigger asChild>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
               <Settings className="w-4 h-4 mr-2" />
-              Mon profil
+              Mon compte
             </DropdownMenuItem>
           </DialogTrigger>
-          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-background">
+          <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto bg-background">
             <DialogHeader>
-              <DialogTitle>Mon profil</DialogTitle>
+              <DialogTitle>Mon compte</DialogTitle>
             </DialogHeader>
-            <ProfileForm onClose={() => setIsProfileOpen(false)} />
+            <div className="flex gap-6">
+              <div className="flex-1">
+                <AccountContent onClose={() => setIsAccountOpen(false)} />
+              </div>
+            </div>
           </DialogContent>
         </Dialog>
 
-        <Dialog open={isLicenseOpen} onOpenChange={setIsLicenseOpen}>
-          <DialogTrigger asChild>
-            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-              <FileText className="w-4 h-4 mr-2" />
-              Permis de conduire
-            </DropdownMenuItem>
-          </DialogTrigger>
-          <DialogContent className="max-w-md bg-background">
-            <DialogHeader>
-              <DialogTitle>Permis de conduire</DialogTitle>
-            </DialogHeader>
-            <DrivingLicenseForm onClose={() => setIsLicenseOpen(false)} />
-          </DialogContent>
-        </Dialog>
+        <DropdownMenuItem onClick={() => handleNavigation('/mes-locations')}>
+          <Calendar className="w-4 h-4 mr-2" />
+          Mes locations
+        </DropdownMenuItem>
+
+        <DropdownMenuItem onClick={() => handleNavigation('/mes-annonces')}>
+          <Car className="w-4 h-4 mr-2" />
+          Mes annonces
+        </DropdownMenuItem>
+
+        <DropdownMenuItem onClick={() => handleNavigation('/mes-favoris')}>
+          <Heart className="w-4 h-4 mr-2" />
+          Mes favoris
+        </DropdownMenuItem>
+
+        <DropdownMenuItem onClick={() => handleNavigation('/centre-aide')}>
+          <HelpCircle className="w-4 h-4 mr-2" />
+          Centre d'aide
+        </DropdownMenuItem>
 
         <DropdownMenuSeparator />
         
