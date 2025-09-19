@@ -30,12 +30,13 @@ const Auth = () => {
   const [registerData, setRegisterData] = useState({
     first_name: '',
     last_name: '',
+    birth_date: '',
     email: '',
     password: '',
     phone: '',
     street: '',
     city: '',
-    birth_date: '',
+    postal_code: '',
   });
 
   const [loading, setLoading] = useState(false);
@@ -82,6 +83,7 @@ const Auth = () => {
         phone: registerData.phone,
         street: registerData.street,
         city: registerData.city,
+        postal_code: registerData.postal_code,
         birth_date: registerData.birth_date,
       });
 
@@ -176,6 +178,17 @@ const Auth = () => {
                 </div>
 
                 <div className="space-y-2">
+                  <Label htmlFor="birth_date">Date de naissance</Label>
+                  <Input
+                    id="birth_date"
+                    type="date"
+                    required
+                    value={registerData.birth_date}
+                    onChange={(e) => setRegisterData({ ...registerData, birth_date: e.target.value })}
+                  />
+                </div>
+
+                <div className="space-y-2">
                   <Label htmlFor="email">Adresse email</Label>
                   <Input
                     id="email"
@@ -218,25 +231,25 @@ const Auth = () => {
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="city">Ville</Label>
-                  <Input
-                    id="city"
-                    required
-                    value={registerData.city}
-                    onChange={(e) => setRegisterData({ ...registerData, city: e.target.value })}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="birth_date">Date de naissance</Label>
-                  <Input
-                    id="birth_date"
-                    type="date"
-                    required
-                    value={registerData.birth_date}
-                    onChange={(e) => setRegisterData({ ...registerData, birth_date: e.target.value })}
-                  />
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="city">Ville</Label>
+                    <Input
+                      id="city"
+                      required
+                      value={registerData.city}
+                      onChange={(e) => setRegisterData({ ...registerData, city: e.target.value })}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="postal_code">Code postal</Label>
+                    <Input
+                      id="postal_code"
+                      required
+                      value={registerData.postal_code}
+                      onChange={(e) => setRegisterData({ ...registerData, postal_code: e.target.value })}
+                    />
+                  </div>
                 </div>
 
                 <Button type="submit" className="w-full" disabled={loading}>

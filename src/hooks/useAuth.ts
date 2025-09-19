@@ -33,6 +33,7 @@ export const useAuth = () => {
     phone: string;
     street: string;
     city: string;
+    postal_code: string;
     birth_date: string;
   }) => {
     const redirectUrl = `${window.location.origin}/`;

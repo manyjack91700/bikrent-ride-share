@@ -24,6 +24,7 @@ export type Database = {
           id: string
           last_name: string
           phone: string
+          postal_code: string
           street: string
           updated_at: string
           user_id: string
@@ -37,6 +38,7 @@ export type Database = {
           id?: string
           last_name: string
           phone: string
+          postal_code?: string
           street: string
           updated_at?: string
           user_id: string
@@ -50,6 +52,7 @@ export type Database = {
           id?: string
           last_name?: string
           phone?: string
+          postal_code?: string
           street?: string
           updated_at?: string
           user_id?: string
