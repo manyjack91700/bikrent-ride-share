@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
+import Header from '@/components/Header';
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -111,7 +112,9 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted px-4">
+    <div className="min-h-screen">
+      <Header />
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted px-4 pt-16">
       <Card className="w-full max-w-2xl card-gradient">
         <CardHeader className="text-center">
           <CardTitle className="text-3xl font-bold text-primary">BikRent</CardTitle>
@@ -260,6 +263,7 @@ const Auth = () => {
           </Tabs>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };

@@ -23,6 +23,11 @@ export type Database = {
           first_name: string
           id: string
           last_name: string
+          license_number: string | null
+          license_type_a: boolean | null
+          license_type_a1: boolean | null
+          license_type_a2: boolean | null
+          license_type_b: boolean | null
           phone: string
           postal_code: string
           street: string
@@ -37,6 +42,11 @@ export type Database = {
           first_name: string
           id?: string
           last_name: string
+          license_number?: string | null
+          license_type_a?: boolean | null
+          license_type_a1?: boolean | null
+          license_type_a2?: boolean | null
+          license_type_b?: boolean | null
           phone: string
           postal_code?: string
           street: string
@@ -51,6 +61,11 @@ export type Database = {
           first_name?: string
           id?: string
           last_name?: string
+          license_number?: string | null
+          license_type_a?: boolean | null
+          license_type_a1?: boolean | null
+          license_type_a2?: boolean | null
+          license_type_b?: boolean | null
           phone?: string
           postal_code?: string
           street?: string
