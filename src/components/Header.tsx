@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, X, User, Heart, MessageCircle } from "lucide-react";
+import { Menu, X, User, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
 import { UserProfileDropdown } from "./UserProfileDropdown";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user } = useAuth();
+  
+  // Pour la démo, on simule qu'il y a 3 nouveaux messages
+  const unreadMessages = 3;
   
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border shadow-sm">
@@ -40,11 +44,16 @@ const Header = () => {
           
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-4">
-            <button className="p-2 text-primary hover:text-secondary transition-colors">
-              <Heart className="w-5 h-5" />
-            </button>
-            <button className="p-2 text-primary hover:text-secondary transition-colors">
+            <button className="relative p-2 text-primary hover:text-secondary transition-colors">
               <MessageCircle className="w-5 h-5" />
+              {unreadMessages > 0 && (
+                <Badge 
+                  variant="destructive" 
+                  className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
+                >
+                  {unreadMessages}
+                </Badge>
+              )}
             </button>
             {user ? (
               <UserProfileDropdown />
