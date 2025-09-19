@@ -8,10 +8,12 @@ import { MessageDropdown } from "./MessageDropdown";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [unreadMessages, setUnreadMessages] = useState(3);
   const { user } = useAuth();
   
-  // Pour la démo, on simule qu'il y a 3 nouveaux messages
-  const unreadMessages = 3;
+  const handleMessageRead = (messageId: string) => {
+    setUnreadMessages(prev => Math.max(0, prev - 1));
+  };
   
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border shadow-sm">
@@ -44,7 +46,7 @@ const Header = () => {
           
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-4">
-            <MessageDropdown unreadCount={unreadMessages} />
+            <MessageDropdown unreadCount={unreadMessages} onMessageRead={handleMessageRead} />
             {user ? (
               <UserProfileDropdown />
             ) : (

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { ArrowLeft, Search, Send, User, Phone, MoreVertical, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,6 +31,15 @@ const Messages = () => {
   const [selectedConversation, setSelectedConversation] = useState<string | null>(null);
   const [newMessage, setNewMessage] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchParams] = useSearchParams();
+
+  // Vérifier si on arrive avec une conversation spécifiée dans l'URL
+  useEffect(() => {
+    const conversationId = searchParams.get('conversation');
+    if (conversationId) {
+      setSelectedConversation(conversationId);
+    }
+  }, [searchParams]);
 
   // Données simulées pour les conversations
   const conversations: Conversation[] = [

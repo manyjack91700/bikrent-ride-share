@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MessageCircle, User } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,10 +20,12 @@ interface Message {
 
 interface MessageDropdownProps {
   unreadCount: number;
+  onMessageRead: (messageId: string) => void;
 }
 
-export const MessageDropdown = ({ unreadCount }: MessageDropdownProps) => {
+export const MessageDropdown = ({ unreadCount, onMessageRead }: MessageDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Messages simulés pour la démo
   const recentMessages: Message[] = [
@@ -49,6 +51,12 @@ export const MessageDropdown = ({ unreadCount }: MessageDropdownProps) => {
       unread: false
     }
   ];
+
+  const handleMessageClick = (messageId: string, conversationId: string) => {
+    onMessageRead(messageId);
+    setIsOpen(false);
+    navigate(`/messages?conversation=${conversationId}`);
+  };
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
@@ -76,8 +84,12 @@ export const MessageDropdown = ({ unreadCount }: MessageDropdownProps) => {
             </div>
           ) : (
             <div className="space-y-3">
-              {recentMessages.map((message) => (
-                <div key={message.id} className="flex items-start gap-3 p-2 hover:bg-accent rounded-lg cursor-pointer">
+              {recentMessages.map((message, index) => (
+                <div 
+                  key={message.id} 
+                  className="flex items-start gap-3 p-2 hover:bg-accent rounded-lg cursor-pointer"
+                  onClick={() => handleMessageClick(message.id, String(index + 1))}
+                >
                   <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center">
                     <User className="w-4 h-4 text-secondary-foreground" />
                   </div>
