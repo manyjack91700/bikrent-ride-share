@@ -9,6 +9,7 @@ import MesLocations from "./pages/MesLocations";
 import MesAnnonces from "./pages/MesAnnonces";
 import MesFavoris from "./pages/MesFavoris";
 import CentreAide from "./pages/CentreAide";
+import Messages from "./pages/Messages";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/mes-annonces" element={<MesAnnonces />} />
           <Route path="/mes-favoris" element={<MesFavoris />} />
           <Route path="/centre-aide" element={<CentreAide />} />
+          <Route path="/messages" element={<Messages />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

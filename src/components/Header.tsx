@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, X, User, MessageCircle } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
 import { UserProfileDropdown } from "./UserProfileDropdown";
+import { MessageDropdown } from "./MessageDropdown";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -44,17 +44,7 @@ const Header = () => {
           
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-4">
-            <button className="relative p-2 text-primary hover:text-secondary transition-colors">
-              <MessageCircle className="w-5 h-5" />
-              {unreadMessages > 0 && (
-                <Badge 
-                  variant="destructive" 
-                  className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
-                >
-                  {unreadMessages}
-                </Badge>
-              )}
-            </button>
+            <MessageDropdown unreadCount={unreadMessages} />
             {user ? (
               <UserProfileDropdown />
             ) : (
